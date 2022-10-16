@@ -1,2 +1,2 @@
-# Tugas-Algoritma-dan-Pemrgraman
+# Tugas-Algoritma-dan-Pemrograman
 My Task
