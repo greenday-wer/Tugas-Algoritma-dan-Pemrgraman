@@ -1,11 +1,30 @@
-#include <stdio.h>
-#define BIAYAADM 50.00
-//cretae by : Komang Bayu Lobi Hartawan_2205551025
-//create by : I Putu Gede Surya Pratama_2205551032
-//Tugas Pembayaran Rekening Air 
 
-int main(){
-	int pilih;
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <math.h>
+#define BIAYAADM 50.00
+#define jatuh_tempo 20
+#define dendaa 10
+#define dendaa1 20
+//cretae by : Komang Bayu Lobi Hartawan_2205551025
+//Tugas Pembayaran Rekening Air 
+void pilihan();
+void ulang(){
+	int ulang;
+	system("cls");
+	printf("Apakah anda ingin mengulang?\n");
+	printf("1. Yes\n2. No\n");
+	scanf("%d", &ulang);
+	if (ulang==1){
+		pilihan();
+	}
+	else if(ulang==2){
+		printf("Terimakasih");
+	}
+	
+}
+void case1(){
 	char kategori;
 	float bpm;
 	float biaya;
@@ -16,46 +35,15 @@ int main(){
 	float pemakaian_ini;
 	float besar_pemakaian;
 	float denda;
+	float dendad;
 	float total;
 	char pilihan='y';
-	int date;
 	char nama[30];
-	do{	
-	system ("cls");
-	printf ("\n\t====================================================================================================\n");
-	printf ("\n\t\t\t\t\t\t| PEMBAYARAN REKENING AIR |\n");
-	printf ("\n\t====================================================================================================\n\n");
-	printf("\t\t\t\t\tSELAMAT DATANG DI PROGRAM PEMBAYARAN AIR\n\n");
-	printf("\t\t\t--------------------------------------------------------------------------\n");
-			printf ("\t\t\t\tBERIKUT PETUNJUK UNTUK MELAKUKAN PERHITUNGAN PEMBAYARAN\n");
-			printf("\t\t\t--------------------------------------------------------------------------\n");
-			printf("\t\t\t| 1  | Masukan Kelompok Anda                                            |\n");
-			printf("\t\t\t| 2  | Masukan Nama Anda                                                |\n");
-			printf("\t\t\t| 3  | Masukan Golongan Pemakai                                         |\n");
-			printf("\t\t\t| 4  | Masukan Tanggal Pembayaran                                       |\n");
-			printf("\t\t\t|    | (Catatan: Jika Pembayaran melewati Jatuh Tempo akan dikenakan    |\n");
-			printf("\t\t\t|    | denda untuk >100 denda 20 dan <100 denda 10)                     |\n");
-			printf("\t\t\t| 5  | Masukan Jumlah Pemakaian Bulan lalu                              |\n");
-			printf("\t\t\t| 6  | Masukan Jumlah Pemakaian Bulan ini                               |\n");
-			printf("\t\t\t| 7  | Maka Perhitungan akan diproses                                   |\n");
-			printf("\t\t\t| 8  | Selesai                                                          |\n");
-			printf("\t\t\t--------------------------------------------------------------------------\n\n");
-			
-			printf("\t\t\t--------------------------------------------------------------------------\n");
-			printf("\t\t\t| NO |                            PILIH MENU                            |\n");
-			printf("\t\t\t--------------------------------------------------------------------------\n");
-			printf("\t\t\t| 1  | KELOMPOK 1 (NON NIAGA BERSUBSIDI)                                |\n");
-			printf("\t\t\t| 2  | KELOMPOK 2 (NON NIAGA TANPA BERSUBSIDI)                          |\n");
-			printf("\t\t\t| 3  | KELOMPOK 3 (NIAGA)                                               |\n");
-			printf("\t\t\t--------------------------------------------------------------------------\n\n");
-	
-			printf("\t\t\t--------------------------------------------------------------------------\n");
-			printf ("\t\t\tMASUKAN KELOMPOK ANDA :| ");
-			scanf("%d", &pilih);
-			printf("\t\t\t--------------------------------------------------------------------------\n");
-	switch(pilih){
-		case 1:
-			
+	time_t t;
+	t=time(NULL);
+	struct tm tm=*localtime(&t);
+	FILE *file;
+	file=fopen("file", "a+");
 			printf("\n\n\n\t\t\t\t\t\t\tDATA KELOMPOK I\n\n");
 			printf("\t\t\t--------------------------------------------------------------------------\n\n");
 			printf("\t\t\t\t\t----------   NON NIAGA BERSUBSIDI   ----------\n");
@@ -104,8 +92,6 @@ int main(){
 			printf("\tMasukan Nomor Golongan Pemakai : ");
 			scanf(" %c", &kategori);
 			printf("\tPembayaran Jatuh Tempo Pada Tanggal 20\n");
-			printf("\tMasukan Tanggal : ");
-			scanf("%d", &date);
 
 				if (kategori=='1'){
 					bpm=10.00;
@@ -324,25 +310,46 @@ int main(){
 					printf("\tBiaya Pemakaian Bulan Ini Jika Lebih Dari 20 m3: Rp %3f\n", biaya);
 					}
 					}
-					if(besar_pemakaian>20){
-						denda=20.00;
-						printf("\tDenda : %.2f\n", denda);
+					denda=tm.tm_mday-jatuh_tempo;
+					if((denda)=0){
+						dendad=denda-denda;
 					}
-					else if(besar_pemakaian<20){
-						denda=10.00;
-						printf("\tDenda : %.2f\n", denda);
+					else if((denda)<=10){
+						dendad=dendaa;
+						printf("\tDenda : %.2f\n", dendad);
 					}
-				
-					
 					printf("\tBPM : %.2f\n", bpm);
 					printf("\tBiaya Administrasi : Rp %.2f\n", BIAYAADM);
-					printf("\n\tTotal : Rp %.2f+%.2f+%.2f+%.2f = %.2f\n", biaya, denda, bpm, BIAYAADM, BIAYAADM+bpm+biaya+denda);
-					printf("\tApakah Anda Ingin Memasukan Ulang?(y/t)\n");
-					printf("\n\tPilihan Saya : ");
-					scanf(" %c", &pilihan);
-				    break;
-			
-		case 2:
+					printf("\n\tTotal : Rp %.2f+%.2f+%.2f+%.2f = %.2f\n", biaya, dendad, bpm, BIAYAADM, biaya+dendad+bpm+BIAYAADM);
+					printf("\tAnda membayar pada tanggal : %d-%d-%d\n\n\n",tm.tm_mday, tm.tm_mon+1, tm.tm_year+1900);
+					fprintf(file, "\tNama : %s", nama);
+					fprintf(file,"\n\tTotal : Rp %.2f+%.2f+%.2f+%.2f = %.2f\n", biaya, dendad, bpm, BIAYAADM, biaya+dendad+bpm+BIAYAADM);
+					fprintf(file,"\tAnda membayar pada tanggal : %d-%d-%d\n\n\n",tm.tm_mday, tm.tm_mon+1, tm.tm_year+1900);
+					fclose(file);
+					system("pause");
+					ulang();
+}
+void case2(){
+	char kategori;
+	float bpm;
+	float biaya;
+	float tarif1;
+	float tarif2;
+	float tarif3;
+	float pemakaian_lalu;
+	float pemakaian_ini;
+	float besar_pemakaian;
+	float denda;
+	float dendad;
+	float total;
+	char pilihan='y';
+	int date;
+	char nama[30];
+	time_t t;
+	t=time(NULL);
+	struct tm tm=*localtime(&t);
+	FILE *file;
+	file=fopen("file", "a+");
 			printf("\n\n\n\t\t\t\t\t\t\tDATA KELOMPOK II\n\n");
 			printf("\t\t\t--------------------------------------------------------------------------\n\n");
 			printf("\t\t\t\t\t---------- NON NIAGA TANPA BERSUBSIDI ---------\n");
@@ -405,8 +412,6 @@ int main(){
 			printf("\tMasukan Nomor Golongan Pemakai :");
 			scanf(" %d", &kategori);
 			printf("\tPembayaran Jatuh Tempo Pada Tanggal 20\n");
-			printf("\tMasukan Tanggal : ");
-			scanf("%d", &date);
 				if (kategori==1){
 					bpm=10.00;
 					printf("\tMasukan Jumlah Pemakaian Bulan Lalu(Dalam M3) : ");
@@ -731,16 +736,46 @@ int main(){
 					printf("\tBiaya Pemakaian Bulan Ini Jika Lebih Dari 20 m3: Rp %.3f\n", biaya);
 					}
 					}
-				
+					denda=tm.tm_mday-jatuh_tempo;
+					if((denda)=0){
+						dendad=denda-denda;
+					}
+					else if((denda)<=10){
+						dendad=dendaa;
+						printf("\tDenda : %.2f\n", dendad);
+					}
 					printf("\tBPM : %.2f\n", bpm);
 					printf("\tBiaya Administrasi : Rp %.2f\n", BIAYAADM);
-					printf("\n\tTotal : Rp %.2f+%.2f+%.2f+%.2f = %.2f\n", biaya, denda, bpm, BIAYAADM, BIAYAADM+bpm+biaya+denda);
-					printf("\tApakah Anda Ingin Memasukan Ulang?(y/t)\n");
-					printf("\n\tPilihan Saya : ");
-					scanf(" %c", &pilihan);
-					break;
-			
-		case 3:
+					printf("\n\tTotal : Rp %.2f+%.2f+%.2f+%.2f = %.2f\n", biaya, dendad, bpm, BIAYAADM, biaya+dendad+bpm+BIAYAADM);
+					printf("\tAnda membayar pada tanggal : %d-%d-%d\n\n\n",tm.tm_mday, tm.tm_mon+1, tm.tm_year+1900);
+					fprintf(file, "Nama : %s", nama);
+					fprintf(file,"\n\tTotal : Rp %.2f+%.2f+%.2f+%.2f = %.2f\n", biaya, dendad, bpm, BIAYAADM, biaya+dendad+bpm+BIAYAADM);
+					fprintf(file,"\tAnda membayar pada tanggal : %d-%d-%d\n\n\n",tm.tm_mday, tm.tm_mon+1, tm.tm_year+1900);
+					fclose(file);
+					system("pause");
+					ulang();
+}
+void case3(){
+	char kategori;
+	float bpm;
+	float biaya;
+	float tarif1;
+	float tarif2;
+	float tarif3;
+	float pemakaian_lalu;
+	float pemakaian_ini;
+	float besar_pemakaian;
+	float denda;
+	float dendad;
+	float total;
+	char pilihan='y';
+	int date;
+	char nama[30];
+	time_t t;
+	t=time(NULL);
+	struct tm tm=*localtime(&t);
+	FILE *file;
+	file=fopen("file", "a+");
 			printf("\n\n\n\t\t\t\t\t\t\tDATA KELOMPOK III\n\n");
 			printf("\t\t\t--------------------------------------------------------------------------\n\n");
 			printf("\t\t\t\t\t\t----------   NIAGA   ---------\n");
@@ -803,8 +838,6 @@ int main(){
 			printf("\tMasukan Golongan Pemakai :");
 			scanf(" %d", &kategori);
 			printf("\tPembayaran Jatuh Tempo Pada Tanggal 20\n");
-			printf("\tMasukan Tanggal : ");
-			scanf("%d", &date);
 				if (kategori==1){
 					bpm=10.00;
 					printf("\tMasukan Jumlah Pemakaian Bulan Lalu(Dalam M3) : ");
@@ -1129,29 +1162,73 @@ int main(){
 					printf("\tBiaya Pemakaian Bulan Ini Jika Lebih Dari 20 m3: Rp %.3f\n", biaya);
 					}
 					}
-					if(besar_pemakaian>20){
-						denda=20.00;
-						printf("\tDenda : %.2f\n", denda);
+					denda=tm.tm_mday-jatuh_tempo;
+					if((denda)=0){
+						dendad=denda-denda;
 					}
-					else if(besar_pemakaian<20){
-						denda=10.00;
-						printf("\tDenda : %.2f\n", denda);
+					else if((denda)<=10){
+						dendad=dendaa;
+						printf("\tDenda : %.2f\n", dendad);
 					}
-				
-					
 					printf("\tBPM : %.2f\n", bpm);
 					printf("\tBiaya Administrasi : Rp %.2f\n", BIAYAADM);
-					printf("\n\tTotal : Rp %.2f+%.2f+%.2f+%.2f = %.2f\n", biaya, denda, bpm, BIAYAADM, BIAYAADM+bpm+biaya+denda);
-					printf("\tApakah Anda Ingin Memasukan Ulang?(y/t)\n");
-					printf("\n\tPilihan Saya : ");
-					scanf(" %c", &pilihan);
-					break;	
-		}
+					printf("\n\tTotal : Rp %.2f+%.2f+%.2f+%.2f = %.2f\n", biaya, dendad, bpm, BIAYAADM, biaya+dendad+bpm+BIAYAADM);
+					printf("\tAnda membayar pada tanggal : %d-%d-%d\n\n\n",tm.tm_mday, tm.tm_mon+1, tm.tm_year+1900);
+					fprintf(file, "Nama : %s", nama);
+					fprintf(file,"\n\tTotal : Rp %.2f+%.2f+%.2f+%.2f = %.2f\n", biaya, dendad, bpm, BIAYAADM, biaya+dendad+bpm+BIAYAADM);
+					fprintf(file,"\tAnda membayar pada tanggal : %d-%d-%d\n\n\n",tm.tm_mday, tm.tm_mon+1, tm.tm_year+1900);
+					fclose(file);
+					system("pause");
+					ulang();
+}
+void pilihan(){
+	int pilih;
+	printf ("\n\t====================================================================================================\n");
+	printf ("\n\t\t\t\t\t\t| PEMBAYARAN REKENING AIR |\n");
+	printf ("\n\t====================================================================================================\n\n");
+	printf("\t\t\t\t\tSELAMAT DATANG DI PROGRAM PEMBAYARAN AIR\n\n");
+	printf("\t\t\t--------------------------------------------------------------------------\n");
+			printf ("\t\t\t\tBERIKUT PETUNJUK UNTUK MELAKUKAN PERHITUNGAN PEMBAYARAN\n");
+			printf("\t\t\t--------------------------------------------------------------------------\n");
+			printf("\t\t\t| 1  | Masukan Kelompok Anda                                            |\n");
+			printf("\t\t\t| 2  | Masukan Nama Anda                                                |\n");
+			printf("\t\t\t| 3  | Masukan Golongan Pemakai                                         |\n");
+			printf("\t\t\t| 4  | Masukan Tanggal Pembayaran                                       |\n");
+			printf("\t\t\t|    | (Catatan: Jika Pembayaran melewati Jatuh Tempo akan dikenakan    |\n");
+			printf("\t\t\t|    | denda untuk >100 denda 20 dan <100 denda 10)                     |\n");
+			printf("\t\t\t| 5  | Masukan Jumlah Pemakaian Bulan lalu                              |\n");
+			printf("\t\t\t| 6  | Masukan Jumlah Pemakaian Bulan ini                               |\n");
+			printf("\t\t\t| 7  | Maka Perhitungan akan diproses                                   |\n");
+			printf("\t\t\t| 8  | Selesai                                                          |\n");
+			printf("\t\t\t--------------------------------------------------------------------------\n\n");
+			
+			printf("\t\t\t--------------------------------------------------------------------------\n");
+			printf("\t\t\t| NO |                            PILIH MENU                            |\n");
+			printf("\t\t\t--------------------------------------------------------------------------\n");
+			printf("\t\t\t| 1  | KELOMPOK 1 (NON NIAGA BERSUBSIDI)                                |\n");
+			printf("\t\t\t| 2  | KELOMPOK 2 (NON NIAGA TANPA BERSUBSIDI)                          |\n");
+			printf("\t\t\t| 3  | KELOMPOK 3 (NIAGA)                                               |\n");
+			printf("\t\t\t--------------------------------------------------------------------------\n\n");
 	
-	}while(pilihan=='y');	
-//					printf("\t+|=====================================================================================================|+\n\n");
-//					printf("\t+|                     TERIMA KASIH TELAH MENGHITUNG PEMBAYARAN REKENING AIR                           |+\n\n");
-//					printf("\t+|=====================================================================================================|+\n\n");	
+			printf("\t\t\t--------------------------------------------------------------------------\n");
+			printf ("\t\t\tMASUKAN KELOMPOK ANDA :| ");
+			scanf("%d", &pilih);
+			printf("\t\t\t--------------------------------------------------------------------------\n");
+			if(pilih==1){
+				case1();
+			}
+			else if(pilih==2){
+				case2();
+			}
+			else if(pilih==3){
+				case3();
+			}
 }
 
+int main(){
+	pilihan();
+	system("pause");
+	system("cls");
+	ulang();	
+}
 
